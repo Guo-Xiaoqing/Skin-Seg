@@ -4,7 +4,12 @@ by [Xiaoqing Guo](https://guo-xiaoqing.github.io/), [Zhen Chen](https://francisz
 
 ## Summary:
 ### Intoduction:
-This repository is for our ISBI2020 paper ["Complementary Network with Adaptive Receptive Fields for Melanoma Segmentation"](https://pdf)
+This repository is for our ISBI2020 paper ["Complementary Network with Adaptive Receptive Fields for Melanoma Segmentation"](https://pdf), which aims to solve the hole (Fig. 1 (a)) and shrink (Fig. 1 (b)) problem in predictions. The relatively low contrast between melanoma and non-melanoma regions confuses the network and causes the appearance of holes. The fuzzy boundaries lead to the shrinking prediction and further decrease the sensitivity of prediction. 
+
+
+![](https://github.com/Guo-Xiaoqing/Skin-Seg/raw/master/intro_problem.png)
+Fig. 1: Illustrations of (a) hole problem, (b) shrink problem. Each group includes the original image, ground truth and prediction of U-Net from left to right.
+
 ### Framework:
 ![](https://github.com/Guo-Xiaoqing/Skin-Seg/raw/master/framework.png)
 
@@ -19,17 +24,13 @@ Clone the repository:
 git clone https://github.com/Guo-Xiaoqing/Skin-Seg.git
 cd Skin-Seg
 ```
-Use "make_txt.py" to split training data and testing data. The generated txt files are showed in folder "./txt/".
-"make_tfrecords.py" is used to make tfrecord format data, which could be stored in folder "./tfrecord/".
 
 ### Train the model: 
 ```
-python3 Triple_ANet_train.py --tfdata_path ./tfrecord/
 ```
 
 ### Test the model: 
 ```
-python3 Triple_ANet_test.py --tfdata_path ./tfrecord/
 ```
 ## Results:
 ![](https://github.com/Guo-Xiaoqing/Skin-Seg/raw/master/result1.png)
