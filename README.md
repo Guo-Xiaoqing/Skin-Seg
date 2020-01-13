@@ -27,10 +27,12 @@ cd Skin-Seg
 
 ### Train the model: 
 ```
+sh ./script/train_dml_mobilenet_on_market.sh
 ```
 
 ### Test the model: 
 ```
+sh ./script/evaluate_dml_mobilenet_on_market.sh
 ```
 ## Results:
 ![](https://github.com/Guo-Xiaoqing/Skin-Seg/raw/master/result1.png)
