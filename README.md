@@ -4,7 +4,7 @@ by [Xiaoqing Guo](https://guo-xiaoqing.github.io/), [Zhen Chen](https://francisz
 
 ## Summary:
 ### Intoduction:
-This repository is for our ISBI2020 paper ["Complementary Network with Adaptive Receptive Fields for Melanoma Segmentation"](https://pdf), which aims to solve the hole (Fig. 1 (a)) and shrink (Fig. 1 (b)) problem in predictions. The relatively low contrast between melanoma and non-melanoma regions confuses the network and causes the appearance of holes. The fuzzy boundaries lead to the shrinking prediction and further decrease the sensitivity of prediction. 
+This repository is for our ISBI2020 paper ["Complementary Network with Adaptive Receptive Fields for Melanoma Segmentation"](https://arxiv.org/abs/2001.03893), which aims to solve the hole (Fig. 1 (a)) and shrink (Fig. 1 (b)) problem in predictions. The relatively low contrast between melanoma and non-melanoma regions confuses the network and causes the appearance of holes. The fuzzy boundaries lead to the shrinking prediction and further decrease the sensitivity of prediction. 
 
 
 ![](https://github.com/Guo-Xiaoqing/Skin-Seg/raw/master/intro_problem.png)
