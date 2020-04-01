@@ -25,16 +25,7 @@ np.random.seed(23333)
 
 slim = tf.contrib.slim
 
-networks_map = {'mobilenet_v1': mobilenet_v1.mobilenet_v1,
-                'inception_v1': inception.inception_v1,
-                'resnet_v2': resnet_v2.resnet_v2_50
-                }
-
-arg_scopes_map = {'mobilenet_v1': mobilenet_v1.mobilenet_v1_arg_scope,
-                  'inception_v1': inception.inception_v1_arg_scope,
-                  'resnet_v2': resnet_v2.resnet_arg_scope,
-                }
-
+networks_map = {'unet': ours.Unet}
 
 def get_network_fn(name, num_classes, weight_decay=0.0):
     """Returns a network_fn such as `logits, end_points = network_fn(images)`.
@@ -59,11 +50,6 @@ def get_network_fn(name, num_classes, weight_decay=0.0):
 
     @functools.wraps(func)
     def network_fn(images, labels, reuse=False, is_training=False, scope=None):
-        #arg_scope = arg_scopes_map[name](weight_decay=weight_decay)
-        #with slim.arg_scope(arg_scope):
-        #    return func(images, num_classes, is_training=is_training, reuse=reuse, scope=scope)
-        #return vgg.discriminator(images, num_classes, is_training=is_training, reuse=reuse, scope=scope)
-        #return densenet.discriminator(images, num_classes, trainable=is_training, reuse=reuse, scope=scope)
         return ours.Unet(images, labels, n_class=2, num_layers=4, features_root=16, filter_size=3, pool_size=2,summaries=is_training, trainable=is_training, reuse=reuse, scope=scope)
 
     if hasattr(func, 'default_image_size'):
