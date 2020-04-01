@@ -13,13 +13,13 @@ DATASET_DIR=./datasets/tfrecord/
 
 # Where the checkpoint and logs will be saved to.
 DATASET_NAME=train
-SAVE_NAME=./logs/polyp_unet #WCE_densenet, WCE_bi_densenet, WCE_saliency, WCE_orig_densenet, WCE_orig_bi_densenet, WCE_orig_saliency          orig refers to no crop black region, without means without blak region(floder name)
+SAVE_NAME=./logs/skin_unet_semi #WCE_densenet, WCE_bi_densenet, WCE_saliency, WCE_orig_densenet, WCE_orig_bi_densenet, WCE_orig_saliency          orig refers to no crop black region, without means without blak region(floder name)
 SAL_DIR=${SAVE_NAME}/saliency_map
 CKPT_DIR=${SAVE_NAME}/checkpoint
 LOG_DIR=${SAVE_NAME}/logs
 
 # Model setting
-MODEL_NAME=resnet_v2,resnet_v2
+MODEL_NAME=unet,unet
 SPLIT_NAME=train
 
 # Run training.
@@ -32,4 +32,4 @@ python3 train_image_classifier.py \
     --log_dir=${LOG_DIR} \
     --model_name=${MODEL_NAME} \
     --preprocessing_name=reid \
-    --num_networks=1
+    --num_networks=2
