@@ -164,8 +164,8 @@ def _tower_loss(network_fn, images, labels, cross = True, reuse=False, is_traini
         #tf.summary.image("label" , get_image_summary(tf.expand_dims(tf.argmax(labels,-1),-1)))
         net_logits["{0}".format(i)],net_endpoints["{0}".format(i)] = network_fn["{0}".format(i)](images, labels, reuse=reuse, is_training=is_training, scope=('dmlnet_%d' % i))
         net_pred["{0}".format(i)] = net_endpoints["{0}".format(i)]['Predictions']
-        #offset["{0}".format(i)] = net_endpoints["{0}".format(i)]['offset2']
-        offset["{0}".format(i)] = net_endpoints["{0}".format(i)]['Predictions']
+        offset["{0}".format(i)] = net_endpoints["{0}".format(i)]['offset2']
+        #offset["{0}".format(i)] = net_endpoints["{0}".format(i)]['Predictions']
 
         #### dice loss && cross entropy loss
         flat_logits["{0}".format(i)] = tf.reshape(net_logits["{0}".format(i)], [-1, FLAGS.num_classes])
@@ -271,13 +271,9 @@ def train():
         # Configure the optimization procedure. #
         #########################################
         with tf.device(deploy_config.optimizer_device()):
-            net_opt, semi_net_opt = {}, {}
+            net_opt = {}
             for i in range(FLAGS.num_networks):
                 net_opt["{0}".format(i)] = tf.train.AdamOptimizer(FLAGS.learning_rate,
-                                                                  beta1=FLAGS.adam_beta1,
-                                                                  beta2=FLAGS.adam_beta2,
-                                                                  epsilon=FLAGS.opt_epsilon)
-                semi_net_opt["{0}".format(i)] = tf.train.AdamOptimizer(FLAGS.learning_rate,
                                                                   beta1=FLAGS.adam_beta1,
                                                                   beta2=FLAGS.adam_beta2,
                                                                   epsilon=FLAGS.opt_epsilon)
@@ -340,8 +336,8 @@ def train():
                 #precision["{0}".format(1)] = tf.reduce_mean(tf.to_float(tf.equal(predictions["{0}".format(1)], 1-truth)))
                # test_precision["{0}".format(1)] = tf.reduce_mean(tf.to_float(tf.equal(test_predictions["{0}".format(1)], 1-test_truth)))
 
-                #precision["{0}".format(1)] = 2*tf.reduce_sum(tf.to_float(predictions["{0}".format(1)]) * tf.to_float(1-truth))/tf.reduce_sum(tf.to_float(predictions["{0}".format(1)] + 1-truth))
-                #test_precision["{0}".format(1)] = 2*tf.reduce_sum(tf.to_float(test_predictions["{0}".format(1)]) * tf.to_float(1-test_truth))/tf.reduce_sum(tf.to_float(test_predictions["{0}".format(1)] +1- test_truth))
+                precision["{0}".format(1)] = 2*tf.reduce_sum(tf.to_float(predictions["{0}".format(1)]) * tf.to_float(1-truth))/tf.reduce_sum(tf.to_float(predictions["{0}".format(1)] + 1-truth))
+                test_precision["{0}".format(1)] = 2*tf.reduce_sum(tf.to_float(test_predictions["{0}".format(1)]) * tf.to_float(1-test_truth))/tf.reduce_sum(tf.to_float(test_predictions["{0}".format(1)] +1- test_truth))
    
                 Gamma ={}
                 for i in range(FLAGS.num_networks):
@@ -388,10 +384,10 @@ def train():
         for i in range(FLAGS.num_networks):
             net_grad_updates["{0}".format(i)] = net_opt["{0}".format(i)].apply_gradients(
                 net_grads["{0}".format(i)], global_step=global_step)
-            #semi_net_grad_updates["{0}".format(i)] = semi_net_opt["{0}".format(i)].apply_gradients(
-            #    semi_net_grads["{0}".format(i)], global_step=global_step)
+            semi_net_grad_updates["{0}".format(i)] = net_opt["{0}".format(i)].apply_gradients(
+                semi_net_grads["{0}".format(i)], global_step=global_step)
             net_update_ops["{0}".format(i)].append(net_grad_updates["{0}".format(i)])
-            #net_update_ops["{0}".format(i)].append(semi_net_grad_updates["{0}".format(i)])
+            net_update_ops["{0}".format(i)].append(semi_net_grad_updates["{0}".format(i)])
             # Group all updates to into a single train op.
             net_train_op["{0}".format(i)] = tf.group(*net_update_ops["{0}".format(i)])
             
@@ -442,12 +438,12 @@ def train():
         GGamma,GG={},{}
         GGamma["{0}".format(0)],GGamma["{0}".format(1)] = {},{}
         for i in range(FLAGS.num_networks):
-            _, GG["{0}".format(i)] = sess.run([precision["{0}".format(i)],Gamma["{0}".format(i)]])
-            for k in GG["{0}".format(i)].keys():
+            GG["{0}".format(i)] = sess.run([Gamma["{0}".format(i)]])
+            for k in GG["{0}".format(i)][0].keys():
                 if 'dmlnet_%d' % i in k and 'GGamma' in k:
                     GGamma_key = k.split(':')[0]
                     GGamma_key = '_'.join(GGamma_key.split('/'))
-                    GGamma["{0}".format(i)][GGamma_key]=[float(GG["{0}".format(i)][k])]
+                    GGamma["{0}".format(i)][GGamma_key]=[float(GG["{0}".format(i)][0][k])]
                                           
                 
         for epoch in range(1, 1+FLAGS.max_number_of_epochs):
@@ -486,14 +482,10 @@ def train():
                     infile.write('\n')
                     infile.write(format_str1 % (epoch, batch_idx,batch_count, time.time()-start_time, dice_loss_value["{0}".format(0)],cross_loss_value["{0}".format(0)],np.float32(kl_value["{0}".format(0)]),np.float32(exclusion_value["{0}".format(0)]),dice_loss_value["{0}".format(1)],cross_loss_value["{0}".format(1)],np.float32(kl_value["{0}".format(1)]),np.float32(exclusion_value["{0}".format(1)])))
                     infile.write('\n')'''
-                    format_str = 'Epoch: [%3d] [%3d/%3d] time: %4.4f, net0_loss = %.5f, net0_acc = %.4f, net0_test_acc = %.4f'
-                    print(format_str % (epoch, batch_idx,batch_count, time.time()-start_time, net_loss_value["{0}".format(0)],
-                           precision_value["{0}".format(0)],np.float32(test_precision_value["{0}".format(0)])))
+                    format_str = 'Epoch: [%3d] [%3d/%3d] time: %4.4f, net0_loss = %.5f, net0_acc = %.4f, net0_test_acc = %.4f   net1_loss = %.5f, net1_acc = %.4f, net1_test_acc = %.4f'
+                    print(format_str % (epoch, batch_idx,batch_count, time.time()-start_time, net_loss_value["{0}".format(0)], precision_value["{0}".format(0)],np.float32(test_precision_value["{0}".format(0)]),net_loss_value["{0}".format(1)], precision_value["{0}".format(1)],np.float32(test_precision_value["{0}".format(1)])))
                     
-                    #format_str = 'Epoch: [%3d] [%3d/%3d] time: %4.4f, net0_loss = %.5f, net0_acc = %.4f'
-                    #print(format_str % (epoch, batch_idx,batch_count, time.time()-start_time, net_loss_value["{0}".format(1)],
-                    #     precision_value["{0}".format(1)]))
-
+                    
                 if batch_idx == 0:
                     testpred0, test_gt,test_X = sess.run([test_predictions["{0}".format(0)], test_truth, test_x])
                     tot_num_samples = FLAGS.batch_size
@@ -526,4 +518,3 @@ def train():
                     for g in GGamma["{0}".format(i)][GGamma_key]:
                         gamma_file.write(str(g)+' \n')
                     gamma_file.close()
-
