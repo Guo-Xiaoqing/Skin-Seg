@@ -19,7 +19,7 @@ CKPT_DIR=${SAVE_NAME}/checkpoint
 LOG_DIR=${SAVE_NAME}
 
 # Model setting
-MODEL_NAME=mobilenet_v1,mobilenet_v1
+MODEL_NAME=unet,unet
 SPLIT_NAME=train
 
 # Run training.
