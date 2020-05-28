@@ -27,17 +27,11 @@ tf.app.flags.DEFINE_string('dataset_name', 'WCE_attention',
 tf.app.flags.DEFINE_string('split_name', 'train',
                            'The name of the data split.')
 
-tf.app.flags.DEFINE_string('dataset_dir', './skin2018/skin2018_tfrecord/',
+tf.app.flags.DEFINE_string('dataset_dir', './skin2018/tfrecord/',
                            'The directory where the dataset files are stored.')
 
-#tf.app.flags.DEFINE_string("tfdata_path", '../dataset/warped_wce/tfrecord128/aug_tfrecord/',
-#                           "aug_tfrecord_2kind")
-
-tf.app.flags.DEFINE_string("tfdata_path", './WCE_polyp/polyp/tfrecord/',
+tf.app.flags.DEFINE_string("tfdata_path", './skin2018/tfrecord/',
                            "aug_tfrecord_2kind")
-
-#tf.app.flags.DEFINE_string("tfdata_path", './datasets/cifar-10-batches-py/tfrecord/',
-#                           "tf-records save path")
 
 tf.app.flags.DEFINE_string('saliency_map', './saliency_map/',
                            'Directory name to save the checkpoints [checkpoint]')
@@ -69,7 +63,7 @@ tf.app.flags.DEFINE_float('weight_centerloss', 0.01,
 tf.app.flags.DEFINE_float('label_smoothing', 0.0,
                           'The amount of label smoothing.')
 
-tf.app.flags.DEFINE_integer('batch_size', 16,
+tf.app.flags.DEFINE_integer('batch_size', 4,
                             'The number of samples in each batch.')
 
 tf.app.flags.DEFINE_integer("train_image_size", 128,
@@ -78,7 +72,7 @@ tf.app.flags.DEFINE_integer("train_image_size", 128,
 tf.app.flags.DEFINE_integer('max_number_of_epochs', 50,
                             'The maximum number of training steps.')
 
-tf.app.flags.DEFINE_integer('ckpt_steps', 5,
+tf.app.flags.DEFINE_integer('ckpt_steps', 2,
                             'How many steps to save checkpoints.')
 
 tf.app.flags.DEFINE_integer('num_classes', 2,
