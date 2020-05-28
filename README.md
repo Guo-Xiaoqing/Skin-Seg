@@ -25,6 +25,13 @@ git clone https://github.com/Guo-Xiaoqing/Skin-Seg.git
 cd Skin-Seg
 ```
 
+### Make tfrecord
+* Please remember to augment dataset before make txt files
+
+* Use "txt.py" to split training data and testing data. The generated txt files are showed in folder "./txt/".
+
+* "make_tfrecords.py" is used to make tfrecord format data, which could be stored in folder "./tfrecord/".
+
 ### Train the model: 
 ```
 sh ./script/train_dml_mobilenet_on_market.sh
