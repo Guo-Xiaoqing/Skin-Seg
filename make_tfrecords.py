@@ -43,12 +43,9 @@ def to_tfrecords(txt_path, tf_path,train_ratio):#
 def write_tf_data(num_train, num_test, txt_list, tfrecords_path, split_name):
     tfrecords_filename = get_tfdata_path(tfrecords_path, split_name)
     with tf.python_io.TFRecordWriter(tfrecords_filename) as tfrecords_writer:
-        if split_name == 'test':
+        if split_name == 'train':
             num_begin = 0
             num_end = num_train
-        elif split_name == 'test':
-            num_begin = num_train
-            num_end = num_train + num_test
 
         for i in range(num_begin, num_end):
             rpath = txt_list[i].split(' ')[0]
