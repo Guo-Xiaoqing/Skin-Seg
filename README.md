@@ -30,7 +30,7 @@ cd Skin-Seg
 
 * Use "txt.py" to split training data and testing data. The generated txt files are showed in folder "./txt/".
 
-* "make_tfrecords.py" is used to make tfrecord format data, which could be stored in folder "./tfrecord/".
+* "make_tfrecords.py" is used to make tfrecord format data, which could be stored in folder "./skin2018/tfrecord/".
 
 ### Train the model: 
 ```
