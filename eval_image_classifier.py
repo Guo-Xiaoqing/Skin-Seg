@@ -53,7 +53,7 @@ tf.app.flags.DEFINE_string('log_dir', './logs/',
 #     Model Settings    #
 #########################
 
-tf.app.flags.DEFINE_string('model_name', 'resnet_v2',
+tf.app.flags.DEFINE_string('model_name', 'unet',
                            'The name of the architecture to train.')
 
 tf.app.flags.DEFINE_string('preprocessing_name', None,
