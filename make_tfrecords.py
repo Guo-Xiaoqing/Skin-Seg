@@ -78,7 +78,7 @@ def write_tf_data(num_train, num_test, txt_list, tfrecords_path, split_name):
 
     
 txt_path = './txt/train_txt.txt'
-tf_path = './tfrecord/'
+tf_path = './skin2018/tfrecord/'
 train_ratio = 1
 to_tfrecords(txt_path, tf_path, train_ratio)
         
