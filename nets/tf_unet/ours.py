@@ -11,12 +11,6 @@
 # You should have received a copy of the GNU General Public License
 # along with tf_unet.  If not, see <http://www.gnu.org/licenses/>.
 
-
-'''
-Created on Jul 28, 2016
-
-author: jakeret
-'''
 from __future__ import print_function, division, absolute_import, unicode_literals
 import tensorflow.contrib as tf_contrib
 from tensorflow.contrib.layers.python.layers import layers
