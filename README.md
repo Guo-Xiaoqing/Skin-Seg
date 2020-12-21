@@ -49,7 +49,17 @@ Each row includes the original image, dilated rate map, predictions and ground t
 Examples of complementary network results in comparison with other methods. The ground truth is denoted in black. Results of \cite{ronneberger2015u}, \cite{sarker2018slsdeep}, \cite{yuan2017improving} and ours are denoted in blue, cyan, green, and red, respectively.
 
 ## Citation:
-To be updated
+If you found Triple ANet helpful for your research, please cite our paper:
+```
+@inproceedings{guo2020complementary,
+  title={Complementary network with adaptive receptive fields for melanoma segmentation},
+  author={Guo, Xiaoqing and Chen, Zhen and Yuan, Yixuan},
+  booktitle={2020 IEEE 17th International Symposium on Biomedical Imaging (ISBI)},
+  pages={2010--2013},
+  year={2020},
+  organization={IEEE}
+}
+```
 
 ## Questions:
 Please contact "xiaoqingguo1128@gmail.com" 
