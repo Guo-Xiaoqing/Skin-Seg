@@ -49,7 +49,7 @@ Each row includes the original image, dilated rate map, predictions and ground t
 Examples of complementary network results in comparison with other methods. The ground truth is denoted in black. Results of \cite{ronneberger2015u}, \cite{sarker2018slsdeep}, \cite{yuan2017improving} and ours are denoted in blue, cyan, green, and red, respectively.
 
 ## Citation:
-If you found our ISBI2020 paper helpful for your research, please cite our paper:
+If you found this repository helpful for your research, please cite our paper:
 ```
 @inproceedings{guo2020complementary,
   title={Complementary network with adaptive receptive fields for melanoma segmentation},
